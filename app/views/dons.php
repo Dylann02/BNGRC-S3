@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BNGRC - Saisie des dons</title>
     <link rel="stylesheet" href="/assets/style.css">
+    <script defer nonce="<?= $nonce ?>" src="/assets/dons.js"></script>
 </head>
 <body>
-    <nav class="sidebar">
+      <nav class="sidebar">
         <div class="sidebar-header">
             <h2>🏛️ BNGRC</h2>
             <p>Suivi des dons</p>
@@ -20,7 +21,6 @@
             <li><a href="dispatch">🚚 Dispatch des dons</a></li>
         </ul>
     </nav>
-
     <main class="content">
         <header class="top-bar">
             <h1>Saisie des Dons</h1>
@@ -29,37 +29,36 @@
         <!-- FORMULAIRE -->
         <section class="form-section">
             <h2>Enregistrer un don</h2>
-            <form action="#" method="post">
+            <form action="/dons/create" method="post">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="donateur">Nom du donateur</label>
                         <input type="text" id="donateur" name="donateur" required placeholder="Ex: ONG Espoir">
                     </div>
-                    <div class="form-group">
-                        <label for="dateDon">Date du don</label>
-                        <input type="date" id="dateDon" name="dateDon" required value="2026-02-16">
-                    </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="typeDon">Type de don</label>
-                        <select id="typeDon" name="typeDon" required>
+                        <label for="typeBesoin">Type de besoin</label>
+                        <select id="typeBesoin" name="type_besoin" required>
                             <option value="">-- Sélectionner --</option>
-                            <option value="nature">En nature</option>
-                            <option value="materiaux">En matériaux</option>
-                            <option value="argent">En argent</option>
+                            <?php foreach ($type_besoin as $type): ?>
+                                <option value="<?= $type['id_type_besoin'] ?>"><?= htmlspecialchars($type['nom_type_besoin']) ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="designationDon">Désignation</label>
-                        <input type="text" id="designationDon" name="designationDon" required placeholder="Ex: Riz, Tôle, Argent">
+                        <label for="besoinDon">Besoin</label>
+                        <select id="besoinDon" name="id_besoin" required>
+                            <option value="">-- Sélectionner un type d'abord --</option>
+                            <?php foreach ($besoins as $besoin): ?>
+                                <option value="<?= $besoin['id_besoin'] ?>" data-type="<?= $besoin['id_type_besoin'] ?>">
+                                    <?= htmlspecialchars($besoin['nom_besoin']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group">
-                        <label for="prixUnitaireDon">Prix unitaire (Ar)</label>
-                        <input type="number" id="prixUnitaireDon" name="prixUnitaireDon" required min="0" step="100" placeholder="Ex: 2500">
-                    </div>
                     <div class="form-group">
                         <label for="quantiteDon">Quantité</label>
                         <input type="number" id="quantiteDon" name="quantiteDon" required min="1" placeholder="Ex: 50">
@@ -75,70 +74,41 @@
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Date</th>
                         <th>Donateur</th>
+                        <th>Besoins</th>
                         <th>Type</th>
-                        <th>Désignation</th>
-                        <th>Prix unitaire (Ar)</th>
                         <th>Quantité</th>
-                        <th>Total (Ar)</th>
-                        <th>Statut</th>
+                        <th>Prix</th>
+                        <th>Date du don</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>201</td>
-                        <td>12/02/2026</td>
-                        <td>ONG Espoir</td>
-                        <td><span class="badge badge-nature">Nature</span></td>
-                        <td>Riz (kg)</td>
-                        <td>2 500</td>
-                        <td>3 000</td>
-                        <td><strong>7 500 000 Ar</strong></td>
-                        <td><span class="badge badge-dispatched">Dispatché</span></td>
-                    </tr>
-                    <tr>
-                        <td>202</td>
-                        <td>13/02/2026</td>
-                        <td>Croix Rouge</td>
-                        <td><span class="badge badge-materiaux">Matériaux</span></td>
-                        <td>Tôle</td>
-                        <td>45 000</td>
-                        <td>100</td>
-                        <td><strong>4 500 000 Ar</strong></td>
-                        <td><span class="badge badge-dispatched">Dispatché</span></td>
-                    </tr>
-                    <tr>
-                        <td>203</td>
-                        <td>14/02/2026</td>
-                        <td>Entreprise ABC</td>
-                        <td><span class="badge badge-argent">Argent</span></td>
-                        <td>Aide financière</td>
-                        <td>1</td>
-                        <td>2 000 000</td>
-                        <td><strong>2 000 000 Ar</strong></td>
-                        <td><span class="badge badge-dispatched">Dispatché</span></td>
-                    </tr>
-                    <tr>
-                        <td>204</td>
-                        <td>14/02/2026</td>
-                        <td>Particulier</td>
-                        <td><span class="badge badge-nature">Nature</span></td>
-                        <td>Huile (litre)</td>
-                        <td>8 000</td>
-                        <td>200</td>
-                        <td><strong>1 600 000 Ar</strong></td>
-                        <td><span class="badge badge-pending">En attente</span></td>
-                    </tr>
+                    <?php if (!empty($dons)): ?>
+                        <?php $total=0?>
+                        <?php foreach ($dons as $don): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($don['donateur'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($don['nom_besoin']) ?></td>
+                                <td><?= htmlspecialchars($don['nom_type_besoin']) ?></td>
+                                <td><?= htmlspecialchars($don['quantite_totale']) ?></td>
+                                <td><?= htmlspecialchars($don['prix_total']) ?></td>
+                                <?php $total=$total+$don['prix_total'] ?>
+                                <td><?= htmlspecialchars($don['date_don'] ?? '') ?></td>
+                            </tr>
+
+                        <?php endforeach; ?>
+                        <tr>
+                            <td>Total</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><?= $total  ?></td>
+                        </tr>
+                    <?php else: ?>
+                        <tr><td colspan="6">Aucun don enregistré.</td></tr>
+                    <?php endif; ?>
                 </tbody>
-                <tfoot>
-                    <tr class="total-row">
-                        <td colspan="7"><strong>TOTAL DES DONS</strong></td>
-                        <td><strong>15 600 000 Ar</strong></td>
-                        <td></td>
-                    </tr>
-                </tfoot>
+                <!-- Optionnel : total général ici si besoin -->
             </table>
         </section>
     </main>

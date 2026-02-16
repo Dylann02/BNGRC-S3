@@ -36,8 +36,9 @@ CREATE TABLE ville_besoin (
     FOREIGN KEY (id_besoin) REFERENCES besoin(id_besoin)
 );
 
-CREATE TABLE don (
+CREATE OR REPLACE TABLE don (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    donateur VARCHAR(200),
     id_besoin INT NOT NULL,
     quantite INT NOT NULL,
     date_don DATETIME DEFAULT CURRENT_TIMESTAMP,

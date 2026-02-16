@@ -1,6 +1,6 @@
 <?php
 
-use app\controllers\ApiExampleController;
+use app\controllers\DonsController;
 use app\middlewares\SecurityHeadersMiddleware;
 use flight\Engine;
 use flight\net\Router;
@@ -19,7 +19,24 @@ $router->group('', function(Router $router) use ($app) {
 		$app->render('home');
 	});
 	$router->get('/dons' ,function () use ($app){
-		$app->render('dons');
+		$donController = new DonsController($app);
+		$dons = $donController->index();
+		$type_besoin = $donController->getAllTypeBesoin();
+		$besoins = $donController->getAllBesoin();
+		$app->render('dons', [
+			'dons' => $dons,
+			'type_besoin' => $type_besoin,
+			'besoins' => $besoins,
+			'nonce' => $app->get('csp_nonce')
+		]);
+	});
+	$router->post('/dons/create' ,function () use ($app){
+		$donController = new DonsController($app);
+		$id_besoin = (int) ($_POST['id_besoin'] ?? 0);
+		$quantite = (int) ($_POST['quantiteDon'] ?? 0);
+		$donateur = trim($_POST['donateur'] ?? '');
+		$donController->create($id_besoin, $quantite, $donateur);
+		$app->redirect('/dons');
 	});
 	$router->get('/dispatch' ,function () use ($app){
 		$app->render('dispatch');
@@ -30,4 +47,4 @@ $router->group('', function(Router $router) use ($app) {
 	$router->get('/besoins' ,function () use ($app){
 		$app->render('besoins');
 	});
-}, [ SecurityHeadersMiddleware::class ]);
+},[ SecurityHeadersMiddleware::class ]);
