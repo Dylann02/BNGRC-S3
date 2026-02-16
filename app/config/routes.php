@@ -3,6 +3,7 @@
 use app\middlewares\SecurityHeadersMiddleware;
 use app\controllers\BesoinController;
 use app\controllers\DonsController;
+use app\controllers\DispatchController;
 use flight\Engine;
 use flight\net\Router;
 
@@ -40,7 +41,23 @@ $router->group('', function(Router $router) use ($app) {
 		$app->redirect('/dons');
 	});
 	$router->get('/dispatch' ,function () use ($app){
-		$app->render('dispatch');
+		$dispatchController = new DispatchController($app);
+		$data = $dispatchController->index();
+		$app->render('dispatch', [
+			'historique' => $data['historique'],
+			'resume' => $data['resume'],
+			'total' => $data['total']
+		]);
+	});
+	$router->get('/dispatch/lancer' ,function () use ($app){
+		$dispatchController = new DispatchController($app);
+		$dispatchController->lancer();
+		$app->redirect('/dispatch');
+	});
+	$router->get('/dispatch/reset' ,function () use ($app){
+		$dispatchController = new DispatchController($app);
+		$dispatchController->reset();
+		$app->redirect('/dispatch');
 	});
 	$router->get('/villes' ,function () use ($app){
 		$app->render('villes');
