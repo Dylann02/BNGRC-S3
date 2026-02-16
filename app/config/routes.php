@@ -1,6 +1,7 @@
 <?php
 
-use app\controllers\ApiExampleController;
+
+use app\controllers\BesoinController;
 use app\middlewares\SecurityHeadersMiddleware;
 use flight\Engine;
 use flight\net\Router;
@@ -28,6 +29,24 @@ $router->group('', function(Router $router) use ($app) {
 		$app->render('villes');
 	});
 	$router->get('/besoins' ,function () use ($app){
-		$app->render('besoins');
+		$besoin = new BesoinController();
+		$data=$besoin->getAll();
+		$ville=$besoin->getVille();
+		$typeBesoin=$besoin->getTypeBesoin();
+		$app->render('besoins' , [
+			'data' => $data , 
+			'ville' => $ville,
+			'typeBesoin' => $typeBesoin
+		]);
+	});
+	$router->get('/supprimerBesoin/@id' , function ($id) use ($app){
+		$besoin = new BesoinController();
+		$besoin->delete($id);
+		$app->redirect('/besoins');
+	});
+	$router->post('/traitementForm' , function () use ($app){
+		$besoin = new BesoinController();
+		$besoin->create();
+		$app->redirect('/besoins');
 	});
 }, [ SecurityHeadersMiddleware::class ]);

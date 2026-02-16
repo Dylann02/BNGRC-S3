@@ -44,5 +44,16 @@ CREATE TABLE don (
     FOREIGN KEY (id_besoin) REFERENCES besoin(id_besoin)
 );
 
-
+CREATE OR REPLACE view v_affiche_besoin as 
+SELECT 
+besoin.id_besoin as id_besoin,
+ville.nom_ville as nom_ville,
+besoin.nom_besoin as nom_besoin,
+type_besoin.nom_type_besoin as nom_type_besoin,
+ville_besoin.quantite as quantite,
+besoin.prix_unitaire as prix_unitaire
+FROM ville_besoin JOIN besoin 
+ON ville_besoin.id_besoin =besoin.id_besoin
+JOIN ville ON ville_besoin.id_ville = ville.id_ville
+JOIN type_besoin ON type_besoin.id_type_besoin = besoin.id_type_besoin;
 

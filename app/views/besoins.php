@@ -29,32 +29,31 @@
         <!-- FORMULAIRE -->
         <section class="form-section">
             <h2>Ajouter un besoin</h2>
-            <form action="#" method="post">
+            <form action="/traitementForm" method="post">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="villeSelect">Ville</label>
-                        <select id="villeSelect" name="villeId" required>
+                        <select id="villeSelect" name="ville" required>
                             <option value="">-- Sélectionner une ville --</option>
-                            <option value="1">Mananjary (Vatovavy-Fitovinany)</option>
-                            <option value="2">Manakara (Vatovavy-Fitovinany)</option>
-                            <option value="3">Farafangana (Atsimo-Atsinanana)</option>
-                            <option value="4">Ikongo (Vatovavy-Fitovinany)</option>
+                            <?php foreach ($ville as $v) { ?>
+                                <option value="<?= $v['id_ville'];?>"><?= $v['nom_ville'];?></option>
+                            <?php  }?>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="typeBesoin">Type de besoin</label>
                         <select id="typeBesoin" name="typeBesoin" required>
                             <option value="">-- Sélectionner --</option>
-                            <option value="nature">En nature (riz, huile...)</option>
-                            <option value="materiaux">En matériaux (tôle, clou...)</option>
-                            <option value="argent">En argent</option>
+                            <?php foreach ($typeBesoin as $t) {?>
+                                    <option value="<?= $t['id_type_besoin'];?>"><?= $t['nom_type_besoin'];?></option>
+                            <?php }?>
                         </select>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
                         <label for="designation">Désignation</label>
-                        <input type="text" id="designation" name="designation" required placeholder="Ex: Riz, Tôle, Aide financière">
+                        <input type="text" id="designation" name="nom_besoin" required placeholder="Ex: Riz, Tôle, Aide financière">
                     </div>
                     <div class="form-group">
                         <label for="prixUnitaire">Prix unitaire (Ar)</label>
@@ -85,7 +84,6 @@
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Ville</th>
                         <th>Type</th>
                         <th>Désignation</th>
@@ -96,101 +94,26 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php 
+                    $count = 0;
+                    foreach($data as $d) { ?>
                     <tr>
-                        <td>101</td>
-                        <td>Mananjary</td>
-                        <td><span class="badge badge-nature">Nature</span></td>
-                        <td>Riz (kg)</td>
-                        <td>2 500</td>
-                        <td>5 000</td>
-                        <td><strong>12 500 000 Ar</strong></td>
-                        <td><a href="#" class="btn btn-danger btn-small">Supprimer</a></td>
+                        <td><?= $d['nom_ville'];?></td>
+                        <td><span class="badge badge-nature"><?= $d['nom_type_besoin'];?></span></td>
+                        <td><?= $d['nom_besoin'];?></td>
+                        <td><?= $d['prix_unitaire'];?></td>
+                        <td><?= $d['quantite'];?></td>
+                        <td><strong><?=$d['prix_unitaire'] *  $d['quantite'];?></strong></td>
+                        <td><a href="supprimerBesoin/<?= $d['id_besoin'];?>" class="btn btn-danger btn-small">Supprimer</a></td>
                     </tr>
-                    <tr>
-                        <td>102</td>
-                        <td>Mananjary</td>
-                        <td><span class="badge badge-nature">Nature</span></td>
-                        <td>Huile (litre)</td>
-                        <td>8 000</td>
-                        <td>500</td>
-                        <td><strong>4 000 000 Ar</strong></td>
-                        <td><a href="#" class="btn btn-danger btn-small">Supprimer</a></td>
-                    </tr>
-                    <tr>
-                        <td>103</td>
-                        <td>Mananjary</td>
-                        <td><span class="badge badge-materiaux">Matériaux</span></td>
-                        <td>Tôle</td>
-                        <td>45 000</td>
-                        <td>300</td>
-                        <td><strong>13 500 000 Ar</strong></td>
-                        <td><a href="#" class="btn btn-danger btn-small">Supprimer</a></td>
-                    </tr>
-                    <tr>
-                        <td>104</td>
-                        <td>Manakara</td>
-                        <td><span class="badge badge-nature">Nature</span></td>
-                        <td>Riz (kg)</td>
-                        <td>2 500</td>
-                        <td>3 000</td>
-                        <td><strong>7 500 000 Ar</strong></td>
-                        <td><a href="#" class="btn btn-danger btn-small">Supprimer</a></td>
-                    </tr>
-                    <tr>
-                        <td>105</td>
-                        <td>Manakara</td>
-                        <td><span class="badge badge-materiaux">Matériaux</span></td>
-                        <td>Clou (kg)</td>
-                        <td>12 000</td>
-                        <td>200</td>
-                        <td><strong>2 400 000 Ar</strong></td>
-                        <td><a href="#" class="btn btn-danger btn-small">Supprimer</a></td>
-                    </tr>
-                    <tr>
-                        <td>106</td>
-                        <td>Farafangana</td>
-                        <td><span class="badge badge-nature">Nature</span></td>
-                        <td>Riz (kg)</td>
-                        <td>2 500</td>
-                        <td>2 000</td>
-                        <td><strong>5 000 000 Ar</strong></td>
-                        <td><a href="#" class="btn btn-danger btn-small">Supprimer</a></td>
-                    </tr>
-                    <tr>
-                        <td>107</td>
-                        <td>Farafangana</td>
-                        <td><span class="badge badge-argent">Argent</span></td>
-                        <td>Aide financière</td>
-                        <td>1</td>
-                        <td>5 000 000</td>
-                        <td><strong>5 000 000 Ar</strong></td>
-                        <td><a href="#" class="btn btn-danger btn-small">Supprimer</a></td>
-                    </tr>
-                    <tr>
-                        <td>108</td>
-                        <td>Ikongo</td>
-                        <td><span class="badge badge-materiaux">Matériaux</span></td>
-                        <td>Tôle</td>
-                        <td>45 000</td>
-                        <td>150</td>
-                        <td><strong>6 750 000 Ar</strong></td>
-                        <td><a href="#" class="btn btn-danger btn-small">Supprimer</a></td>
-                    </tr>
-                    <tr>
-                        <td>109</td>
-                        <td>Ikongo</td>
-                        <td><span class="badge badge-nature">Nature</span></td>
-                        <td>Huile (litre)</td>
-                        <td>8 000</td>
-                        <td>200</td>
-                        <td><strong>1 600 000 Ar</strong></td>
-                        <td><a href="#" class="btn btn-danger btn-small">Supprimer</a></td>
-                    </tr>
+                    <?php 
+                    $count += $d['prix_unitaire'] *  $d['quantite'];
+                    }?>
                 </tbody>
                 <tfoot>
                     <tr class="total-row">
                         <td colspan="6"><strong>TOTAL</strong></td>
-                        <td><strong>58 250 000 Ar</strong></td>
+                        <td><strong><?= $count?>Ar</strong></td>
                         <td></td>
                     </tr>
                 </tfoot>
