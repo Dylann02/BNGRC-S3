@@ -7,19 +7,7 @@
     <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
-    <nav class="sidebar">
-        <div class="sidebar-header">
-            <h2>🏛️ BNGRC</h2>
-            <p>Suivi des dons</p>
-        </div>
-        <ul class="nav-links">
-            <li><a href="home">📊 Tableau de bord</a></li>
-            <li><a href="villes" class="active">🏘️ Villes & Régions</a></li>
-            <li><a href="besoins">📋 Besoins des sinistrés</a></li>
-            <li><a href="dons">🎁 Saisie des dons</a></li>
-            <li><a href="dispatch">🚚 Dispatch des dons</a></li>
-        </ul>
-    </nav>
+<?php include("header.php");?>
 
     <main class="content">
         <header class="top-bar">

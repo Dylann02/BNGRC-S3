@@ -8,19 +8,7 @@
     <script defer nonce="<?= $nonce ?>" src="/assets/dons.js"></script>
 </head>
 <body>
-      <nav class="sidebar">
-        <div class="sidebar-header">
-            <h2>🏛️ BNGRC</h2>
-            <p>Suivi des dons</p>
-        </div>
-        <ul class="nav-links">
-            <li><a href="home">📊 Tableau de bord</a></li>
-            <li><a href="villes">🏘️ Villes & Régions</a></li>
-            <li><a href="besoins">📋 Besoins des sinistrés</a></li>
-            <li><a href="dons" class="active">🎁 Saisie des dons</a></li>
-            <li><a href="dispatch">🚚 Dispatch des dons</a></li>
-        </ul>
-    </nav>
+<?php include("header.php");?>
     <main class="content">
         <header class="top-bar">
             <h1>Saisie des Dons</h1>

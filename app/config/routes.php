@@ -3,7 +3,8 @@
 use app\middlewares\SecurityHeadersMiddleware;
 use app\controllers\BesoinController;
 use app\controllers\DonsController;
-use app\controllers\VillesController;
+
+
 use flight\Engine;
 use flight\net\Router;
 
@@ -17,7 +18,7 @@ $router->group('', function (Router $router) use ($app) {
 	$router->get('/', function () use ($app) {
 		$app->render('home');
 	});
-	$router->get('/home', function () use ($app) {
+	$router->get('/home' ,function () use ($app){
 		$app->render('home');
 	});
 	$router->get('/dons', function () use ($app) {
@@ -40,7 +41,7 @@ $router->group('', function (Router $router) use ($app) {
 		$donController->create($id_besoin, $quantite, $donateur);
 		$app->redirect('/dons');
 	});
-	$router->get('/dispatch', function () use ($app) {
+	$router->get('/dispatch' ,function () use ($app){
 		$app->render('dispatch');
 	});
 
