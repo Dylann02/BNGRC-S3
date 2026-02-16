@@ -62,10 +62,10 @@
                 <label for="filterVille">Filtrer par ville :</label>
                 <select id="filterVille" name="filterVille">
                     <option value="">Toutes les villes</option>
-                    <option value="1">Mananjary</option>
-                    <option value="2">Manakara</option>
-                    <option value="3">Farafangana</option>
-                    <option value="4">Ikongo</option>
+                    <?php foreach ($ville as $v) {?>
+                        <option value="<?= $v['id_ville'];?>"><?= $v['nom_ville'];?></option>
+                    <?php }?>
+                    
                 </select>
             </div>
             <table>
