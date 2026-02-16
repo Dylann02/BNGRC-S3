@@ -3,6 +3,7 @@ use app\middlewares\SecurityHeadersMiddleware;
 use app\controllers\BesoinController;
 use app\controllers\DonsController;
 use app\controllers\DispatchController;
+use app\controllers\VillesController;
 
 use flight\Engine;
 use flight\net\Router;
@@ -15,7 +16,7 @@ use flight\net\Router;
 // This wraps all routes in the group with the SecurityHeadersMiddleware
 $router->group('', function (Router $router) use ($app) {
 	$router->get('/', function () use ($app) {
-		$app->render('home');
+		$app->redirect('/home');
 	});
 	$router->get('/home' ,function () use ($app){
 		$donController = new DonsController($app);
