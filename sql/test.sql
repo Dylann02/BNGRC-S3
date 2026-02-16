@@ -5,12 +5,12 @@ INSERT INTO region (nom_region) VALUES
 ('Vakinankaratra'),
 ('Sava');
 
-INSERT INTO ville (nom_ville, id_region) VALUES
-('Antananarivo', 1),
-('Toamasina', 2),
-('Mahajanga', 3),
-('Antsirabe', 4),
-('Sambava', 5);
+INSERT INTO ville (nom_ville, id_region, nb_sinistres) VALUES
+('Antananarivo', 1, 1200),
+('Toamasina', 2, 800),
+('Mahajanga', 3, 600),
+('Antsirabe', 4, 400),
+('Sambava', 5, 150);
 
 INSERT INTO type_besoin (nom_type_besoin) VALUES
 ('Nature'),
