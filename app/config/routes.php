@@ -2,6 +2,8 @@
 
 use app\controllers\ApiExampleController;
 use app\middlewares\SecurityHeadersMiddleware;
+use app\controllers\BesoinController;
+use app\controllers\DonsController;
 use flight\Engine;
 use flight\net\Router;
 use app\middlewares\SecurityHeadersMiddleware;
