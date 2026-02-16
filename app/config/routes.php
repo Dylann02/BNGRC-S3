@@ -18,7 +18,13 @@ $router->group('', function(Router $router) use ($app) {
 		$app->render('home');
 	});
 	$router->get('/home' ,function () use ($app){
-		$app->render('home');
+		$besoin = new BesoinController();
+		$donController = new DonsController($app);
+		$data=$besoin->getAll();
+		$dons = $donController->index();
+		$type_besoin = $donController->getAllTypeBesoin();
+		$besoins = $donController->getAllBesoin();
+		$app->render('home',['dons' => $dons,'besoin'=>$besoins]);
 	});
 	$router->get('/dons' ,function () use ($app){
 		$donController = new DonsController($app);

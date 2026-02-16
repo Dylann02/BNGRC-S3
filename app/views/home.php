@@ -1,3 +1,11 @@
+<?php 
+$total = 0;
+$nombre_dons= sizeof($dons);
+$nombre_besoin = sizeof($besoin);
+foreach($dons as $don){
+    $total += $don['prix_total'];
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,19 +15,7 @@
     <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
-    <nav class="sidebar">
-        <div class="sidebar-header">
-            <h2>🏛️ BNGRC</h2>
-            <p>Suivi des dons</p>
-        </div>
-        <ul class="nav-links">
-            <li><a href="home" class="active">📊 Tableau de bord</a></li>
-            <li><a href="villes">🏘️ Villes & Régions</a></li>
-            <li><a href="besoins">📋 Besoins des sinistrés</a></li>
-            <li><a href="dons">🎁 Saisie des dons</a></li>
-            <li><a href="dispatch">🚚 Dispatch des dons</a></li>
-        </ul>
-    </nav>
+<?php include("header.php");?>
 
     <main class="content">
         <header class="top-bar">
@@ -31,15 +27,15 @@
                     <span class="stat-label">Villes sinistrées</span>
                 </div>
                 <div class="stat-card stat-besoins">
-                    <span class="stat-number">9</span>
+                    <span class="stat-number"><?=$nombre_besoin?></span>
                     <span class="stat-label">Besoins enregistrés</span>
                 </div>
                 <div class="stat-card stat-dons">
-                    <span class="stat-number">4</span>
+                    <span class="stat-number"><?= $nombre_dons?></span>
                     <span class="stat-label">Dons reçus</span>
                 </div>
                 <div class="stat-card stat-montant">
-                    <span class="stat-number">13 100 000 Ar</span>
+                    <span class="stat-number"><?= $total ?></span>
                     <span class="stat-label">Montant total des dons</span>
                 </div>
             </div>
