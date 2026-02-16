@@ -24,10 +24,10 @@ class VillesController {
     }
 
     public function addVille() {
-        $data = $this->app->request()->data;
-        $model = new VilleModel($this->app);
-        $model->addVille($data);
-    }
+    $data = $this->app->request()->data; 
+    $model = new VilleModel($this->app);
+    $model->addVille($data);
+}
 
     public function deleteVille($id) {
         $model = new VilleModel($this->app);

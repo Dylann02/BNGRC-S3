@@ -14,7 +14,6 @@
             <h1>Gestion des Villes & Régions</h1>
         </header>
 
-     
         <section class="form-section">
             <h2>Ajouter une ville</h2>
             <form method="POST" action="/villes">
@@ -27,9 +26,13 @@
                         <label for="region">Région</label>
                         <select id="region" name="region" required>
                             <option value="">-- Choisir une région --</option>
-                            <?php foreach($regions as $region): ?>
-                                <option value="<?= $region['id_region'] ?>"><?= htmlspecialchars($region['nom_region']) ?></option>
-                            <?php endforeach; ?>
+                            <?php if(isset($regions) && !empty($regions)): ?>
+                                <?php foreach($regions as $region): ?>
+                                    <option value="<?php echo htmlspecialchars(isset($region['id_region']) ? $region['id_region'] : ''); ?>">
+                                        <?php echo htmlspecialchars(isset($region['nom_region']) ? $region['nom_region'] : ''); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </select>
                     </div>
                     <div class="form-group">
@@ -41,7 +44,6 @@
             </form>
         </section>
 
-     
         <section class="table-section">
             <h2>Liste des villes sinistrées</h2>
             <table>
@@ -55,15 +57,30 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if(!empty($villes)): ?>
+                    <?php if(isset($villes) && !empty($villes)): ?>
                         <?php foreach($villes as $ville): ?>
                             <tr>
-                                <td><?= $ville['id_ville'] ?></td>
-                                <td><strong><?= htmlspecialchars($ville['nom_ville']) ?></strong></td>
-                                <td><?= htmlspecialchars($ville['nom_region']) ?></td>
-                                <td><?= htmlspecialchars($ville['nb_sinistres']) ?></td>
+                                <td><?php echo htmlspecialchars(isset($ville['id_ville']) ? $ville['id_ville'] : ''); ?></td>
                                 <td>
-                                    <a href="/delete-ville/<?= $ville['id_ville'] ?>" class="btn btn-danger btn-small" onclick="return confirm('Supprimer cette ville ?')">Supprimer</a>
+                                    <strong>
+                                        <?php echo htmlspecialchars(isset($ville['nom_ville']) ? $ville['nom_ville'] : ''); ?>
+                                    </strong>
+                                </td>
+                                <td>
+                                    <?php echo htmlspecialchars(isset($ville['nom_region']) ? $ville['nom_region'] : 'Non définie'); ?>
+                                </td>
+                                <td>
+                                    <?php 
+                                        $nb = isset($ville['nb_sinistres']) ? $ville['nb_sinistres'] : 0;
+                                        echo htmlspecialchars((string)$nb); 
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php if(isset($ville['id_ville'])): ?>
+                                        <a href="/delete-ville/<?php echo $ville['id_ville']; ?>" 
+                                           class="btn btn-danger btn-small" 
+                                           onclick="return confirm('Supprimer cette ville ?')">Supprimer</a>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
