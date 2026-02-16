@@ -6,7 +6,7 @@ CREATE TABLE region (
     nom_region VARCHAR(100) NOT NULL UNIQUE
 );
 
-CREATE TABLE ville (
+CREATE OR REPLACE TABLE ville (
     id_ville INT AUTO_INCREMENT PRIMARY KEY,
     nom_ville VARCHAR(100) NOT NULL,
     id_region INT NOT NULL,
