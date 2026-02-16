@@ -10,6 +10,7 @@ CREATE TABLE ville (
     id_ville INT AUTO_INCREMENT PRIMARY KEY,
     nom_ville VARCHAR(100) NOT NULL,
     id_region INT NOT NULL,
+    nb_sinistres INT DEFAULT 0,
     FOREIGN KEY (id_region) REFERENCES region(id_region)
 );
 
