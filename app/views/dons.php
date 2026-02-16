@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BNGRC - Saisie des dons</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
     <nav class="sidebar">
@@ -13,11 +13,11 @@
             <p>Suivi des dons</p>
         </div>
         <ul class="nav-links">
-            <li><a href="index.html">📊 Tableau de bord</a></li>
-            <li><a href="villes.html">🏘️ Villes & Régions</a></li>
-            <li><a href="besoins.html">📋 Besoins des sinistrés</a></li>
-            <li><a href="dons.html" class="active">🎁 Saisie des dons</a></li>
-            <li><a href="dispatch.html">🚚 Dispatch des dons</a></li>
+            <li><a href="home">📊 Tableau de bord</a></li>
+            <li><a href="villes">🏘️ Villes & Régions</a></li>
+            <li><a href="besoins">📋 Besoins des sinistrés</a></li>
+            <li><a href="dons" class="active">🎁 Saisie des dons</a></li>
+            <li><a href="dispatch">🚚 Dispatch des dons</a></li>
         </ul>
     </nav>
 

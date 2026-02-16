@@ -13,11 +13,11 @@
             <p>Suivi des dons</p>
         </div>
         <ul class="nav-links">
-            <li><a href="index.html" class="active">📊 Tableau de bord</a></li>
-            <li><a href="villes.html">🏘️ Villes & Régions</a></li>
-            <li><a href="besoins.html">📋 Besoins des sinistrés</a></li>
-            <li><a href="dons.html">🎁 Saisie des dons</a></li>
-            <li><a href="dispatch.html">🚚 Dispatch des dons</a></li>
+            <li><a href="home" class="active">📊 Tableau de bord</a></li>
+            <li><a href="villes">🏘️ Villes & Régions</a></li>
+            <li><a href="besoins">📋 Besoins des sinistrés</a></li>
+            <li><a href="dons">🎁 Saisie des dons</a></li>
+            <li><a href="dispatch">🚚 Dispatch des dons</a></li>
         </ul>
     </nav>
 

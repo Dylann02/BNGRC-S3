@@ -1,5 +1,5 @@
 create database BNGRC;
-use BNGRC;
+USE BNGRC;
 
 CREATE TABLE region (
     id_region INT AUTO_INCREMENT PRIMARY KEY,
