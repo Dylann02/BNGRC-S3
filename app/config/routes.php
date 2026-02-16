@@ -12,6 +12,8 @@ use flight\net\Router;
 
 // This wraps all routes in the group with the SecurityHeadersMiddleware
 $router->group('', function(Router $router) use ($app) {
+	$router->get('/' ,function () use ($app){
+		$app->render('home');
+	});
 
-	
 }, [ SecurityHeadersMiddleware::class ]);
