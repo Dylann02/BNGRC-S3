@@ -1,0 +1,10 @@
+projet BNGRC
+
+conception:
+    -Base :
+        region (id_region , nom_region)
+        ville (id_ville , nom_ville ,id_region)
+        type_besoin (id_type_besoin , nom_type_besoin)
+        besoin (id_besoin ,nom_besoin ,id_type_besoin ,prix_unitaire)
+        ville_besoin (id_ville_besoin ,id_ville ,id_besoin ,quantite ,date_saisie)
+
