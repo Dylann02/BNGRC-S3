@@ -8,3 +8,11 @@ conception:
         besoin (id_besoin ,nom_besoin ,id_type_besoin ,prix_unitaire)
         ville_besoin (id_ville_besoin ,id_ville ,id_besoin ,quantite ,date_saisie)
 
+    -donnee dynamique 
+
+    -CRUD : 
+        *ville et region 
+        *besoins
+        *dons
+
+
