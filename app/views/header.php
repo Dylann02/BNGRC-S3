@@ -10,5 +10,6 @@
             <li><a href="dons">🎁 Saisie des dons</a></li>
             <li><a href="dispatch">🚚 Dispatch des dons</a></li>
             <li><a href="achats">💰 Achats (argent)</a></li>
+            <li><a href="recap">📊 Récapitulation</a></li>
         </ul>
     </nav>

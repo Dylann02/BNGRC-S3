@@ -5,6 +5,7 @@ use app\controllers\DonsController;
 use app\controllers\DispatchController;
 use app\controllers\VillesController;
 use app\controllers\AchatController;
+use app\controllers\RecapController;
 use flight\Engine;
 use flight\net\Router;
 
@@ -146,5 +147,15 @@ $router->group('', function (Router $router) use ($app) {
 		$controller->reset();
 		$app->redirect('/achats');
 	});
+
+	$router->get('/recap', function () use ($app) {
+    $controller = new RecapController($app);
+    $controller->index();
+});
+
+$router->get('/api/recap', function () use ($app) {
+    $controller = new RecapController($app);
+    $controller->getRecapJson();
+});
 
 }, [SecurityHeadersMiddleware::class]);
