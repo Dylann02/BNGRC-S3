@@ -55,13 +55,17 @@ $router->group('', function (Router $router) use ($app) {
 		$app->render('dispatch', [
 			'historique' => $data['historique'],
 			'resume' => $data['resume'],
-			'total' => $data['total']
+			'total' => $data['total'],
+			'strategie' => $_GET['strategie'] ?? 'besoin'
 		]);
 	});
 	$router->get('/dispatch/lancer', function () use ($app) {
 		$dispatchController = new DispatchController($app);
-		$dispatchController->lancer();
-		$app->redirect('/dispatch');
+		$strategie = $_GET['strategie'] ?? 'besoin';
+		$allowed = ['chronologique', 'besoin', 'proportion'];
+		if (!in_array($strategie, $allowed)) $strategie = 'besoin';
+		$dispatchController->lancer($strategie);
+		$app->redirect('/dispatch?strategie=' . $strategie);
 	});
 	$router->get('/dispatch/reset', function () use ($app) {
 		$dispatchController = new DispatchController($app);

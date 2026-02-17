@@ -20,8 +20,8 @@ class DispatchController {
         ];
     }
 
-    public function lancer(): array {
-        return $this->model->lancerDispatch();
+    public function lancer(string $strategie = 'besoin'): array {
+        return $this->model->lancerDispatch($strategie);
     }
 
 

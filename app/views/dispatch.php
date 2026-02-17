@@ -2,7 +2,13 @@
 /** @var array $historique */
 /** @var array $resume */
 /** @var array $total */
+/** @var string $strategie */
 $page = "dispatch";
+$labels = [
+    'chronologique' => '📅 Chronologique',
+    'besoin' => '📦 Par besoin',
+    'proportion' => '⚖️ Proportionnel'
+];
 ?><!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -22,15 +28,35 @@ $page = "dispatch";
         <!-- CONTROLES -->
         <section class="dispatch-controls">
             <div class="info-box">
-                <p>⚙️ Le dispatch attribue automatiquement les dons aux villes par <strong>ordre de quantité croissante</strong> (les plus petites quantités sont traitées en premier), en respectant la correspondance des types et désignations de besoins.</p>
+                <p>⚙️ Choisissez la stratégie de dispatch puis lancez l'attribution automatique.</p>
             </div>
-            <a href="/dispatch/lancer" class="btn btn-success btn-large">🚀 Lancer le dispatch automatique</a>
-            <a href="/dispatch/reset" class="btn btn-danger">🔄 Réinitialiser le dispatch</a>
+
+            <!-- SÉLECTEUR DE STRATÉGIE + LANCER -->
+            <form action="/dispatch/lancer" method="get" style="margin-bottom:15px;">
+                <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+                    <?php foreach ($labels as $key => $label): ?>
+                        <label style="display:flex; align-items:center; gap:8px; padding:10px 16px; border-radius:8px; cursor:pointer; border:2px solid <?= $key === $strategie ? '#4caf50' : '#ddd' ?>; background:<?= $key === $strategie ? '#e8f5e9' : '#fff' ?>; transition:all 0.2s;">
+                            <input type="radio" name="strategie" value="<?= $key ?>" <?= $key === $strategie ? 'checked' : '' ?> style="accent-color:#4caf50; width:18px; height:18px;">
+                            <span style="font-weight:<?= $key === $strategie ? 'bold' : 'normal' ?>;"><?= htmlspecialchars($label) ?></span>
+                        </label>
+                    <?php endforeach; ?>
+                </div>
+                <div style="margin-top:12px; display:flex; gap:10px; justify-content:center;">
+                    <button type="submit" class="btn btn-success btn-large">🚀 Lancer le dispatch</button>
+                    <a href="/dispatch/reset" class="btn btn-danger">🔄 Réinitialiser</a>
+                </div>
+            </form>
         </section>
 
         <!-- HISTORIQUE DES ATTRIBUTIONS -->
         <section class="table-section">
-            <h2>Historique des attributions</h2>
+            <h2>Historique des attributions 
+                <?php if (!empty($historique)): ?>
+                    <span style="display:inline-block; padding:3px 10px; border-radius:12px; font-size:0.7em; background:#e3f2fd; color:#1565c0; vertical-align:middle;">
+                        🏷️ <?= htmlspecialchars($labels[$strategie] ?? $strategie) ?>
+                    </span>
+                <?php endif; ?>
+            </h2>
             <table>
                 <thead>
                     <tr>
