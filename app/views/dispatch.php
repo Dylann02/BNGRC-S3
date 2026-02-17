@@ -21,7 +21,7 @@
         <!-- CONTROLES -->
         <section class="dispatch-controls">
             <div class="info-box">
-                <p>⚙️ Le dispatch attribue automatiquement les dons aux villes par <strong>ordre de date de saisie</strong> du don, en respectant la correspondance des types et désignations de besoins.</p>
+                <p>⚙️ Le dispatch attribue automatiquement les dons aux villes par <strong>ordre de quantité croissante</strong> (les plus petites quantités sont traitées en premier), en respectant la correspondance des types et désignations de besoins.</p>
             </div>
             <a href="/dispatch/lancer" class="btn btn-success btn-large">🚀 Lancer le dispatch automatique</a>
             <a href="/dispatch/reset" class="btn btn-danger">🔄 Réinitialiser le dispatch</a>

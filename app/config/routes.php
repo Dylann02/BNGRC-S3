@@ -111,6 +111,11 @@ $router->group('', function (Router $router) use ($app) {
 		$app->redirect('/besoins');
 	});
 
+	$router->get('/api/besoins/@id_type', function ($id_type) use ($app) {
+		$besoin = new BesoinController();
+		$besoin->getBesoinsParType($id_type);
+	});
+
 	// --- Achats via dons en argent ---
 	$router->get('/achats', function () use ($app) {
 		$controller = new AchatController($app);
