@@ -47,6 +47,13 @@ class BesoinController
         $besoin = new BesoinModel(Flight::db());
         return $besoin->typeBesoin();
     }
+
+    public function getBesoinsParType($id_type)
+    {
+        $besoin = new BesoinModel(Flight::db());
+        header('Content-Type: application/json');
+        echo json_encode($besoin->getBesoinsParType($id_type));
+    }
 }
 
 ?>
