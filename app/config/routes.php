@@ -4,8 +4,6 @@ use app\controllers\BesoinController;
 use app\controllers\DonsController;
 use app\controllers\DispatchController;
 use app\controllers\VillesController;
-use app\controllers\AchatController;
-
 use flight\Engine;
 use flight\net\Router;
 
@@ -109,91 +107,4 @@ $router->group('', function (Router $router) use ($app) {
 		$app->redirect('/besoins');
 	});
 
-	// --- Achats via dons en argent ---
-	$router->get('/achats', function () use ($app) {
-		$controller = new AchatController($app);
-		$idVille = isset($_GET['ville']) && $_GET['ville'] !== '' ? (int) $_GET['ville'] : null;
-		$data = $controller->index($idVille);
-		$app->render('achats', [
-			'argent' => $data['argent'],
-			'besoins' => $data['besoins'],
-			'historique' => $data['historique'],
-			'villes' => $data['villes'],
-			'filtre_ville' => $data['filtre_ville'],
-			'error' => $_GET['error'] ?? null,
-			'success' => $_GET['success'] ?? null
-		]);
-	});
-	$router->post('/achats/acheter', function () use ($app) {
-		$controller = new AchatController($app);
-		$idVilleBesoin = (int) ($_POST['id_ville_besoin'] ?? 0);
-		$quantite = (int) ($_POST['quantite'] ?? 0);
-		$result = $controller->acheter($idVilleBesoin, $quantite);
-		if (isset($result['error'])) {
-			$app->redirect('/achats?error=' . urlencode($result['error']));
-		} else {
-			$app->redirect('/achats?success=' . urlencode('Achat effectué avec succès !'));
-		}
-	});
-	$router->get('/achats/reset', function () use ($app) {
-		$controller = new AchatController($app);
-		$controller->reset();
-		$app->redirect('/achats');
-	});
-
-	// --- Simulation d'achats ---
-	$router->get('/simulation', function () use ($app) {
-		$controller = new AchatController($app);
-		$idVille = isset($_GET['ville']) && $_GET['ville'] !== '' ? (int) $_GET['ville'] : null;
-		$data = $controller->simulation($idVille);
-		$app->render('simulation', [
-			'argent' => $data['argent'],
-			'besoins' => $data['besoins'],
-			'simulations' => $data['simulations'],
-			'villes' => $data['villes'],
-			'filtre_ville' => $data['filtre_ville'],
-			'error' => $_GET['error'] ?? null,
-			'success' => $_GET['success'] ?? null
-		]);
-	});
-	$router->post('/simulation/simuler', function () use ($app) {
-		$controller = new AchatController($app);
-		$idVilleBesoin = (int) ($_POST['id_ville_besoin'] ?? 0);
-		$quantite = (int) ($_POST['quantite'] ?? 0);
-		$result = $controller->simuler($idVilleBesoin, $quantite);
-		if (isset($result['error'])) {
-			$app->redirect('/simulation?error=' . urlencode($result['error']));
-		} else {
-			$app->redirect('/simulation?success=' . urlencode('Simulation enregistrée !'));
-		}
-	});
-	$router->get('/simulation/valider', function () use ($app) {
-		$controller = new AchatController($app);
-		$result = $controller->validerSimulations();
-		if (isset($result['error'])) {
-			$app->redirect('/simulation?error=' . urlencode($result['error']));
-		} else {
-			$app->redirect('/achats?success=' . urlencode($result['message'] ?? 'Simulations validées !'));
-		}
-	});
-	$router->get('/simulation/annuler', function () use ($app) {
-		$controller = new AchatController($app);
-		$controller->annulerSimulations();
-		$app->redirect('/simulation?success=' . urlencode('Simulations annulées.'));
-	});
-
-	// --- Récapitulation ---
-	$router->get('/recap', function () use ($app) {
-		$controller = new AchatController($app);
-		$data = $controller->recap();
-		$app->render('recap', [
-			'recap' => $data['recap'],
-			'recap_villes' => $data['recap_villes']
-		]);
-	});
-	$router->get('/recap/json', function () use ($app) {
-		$controller = new AchatController($app);
-		$data = $controller->recapJson();
-		$app->json($data);
-	});
 }, [SecurityHeadersMiddleware::class]);

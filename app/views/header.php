@@ -9,8 +9,6 @@
             <li><a href="besoins" class="active">📋 Besoins des sinistrés</a></li>
             <li><a href="dons">🎁 Saisie des dons</a></li>
             <li><a href="dispatch">🚚 Dispatch des dons</a></li>
-            <li><a href="achats">💰 Achats (argent)</a></li>
-            <li><a href="simulation">🔬 Simulation</a></li>
-            <li><a href="recap">📊 Récapitulation</a></li>
+
         </ul>
     </nav>
