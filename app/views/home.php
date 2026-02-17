@@ -1,4 +1,5 @@
 <?php 
+$page = "home";
 $total = 0;
 $nombre_dons= sizeof($dons);
 $nombre_besoin = sizeof($besoin);

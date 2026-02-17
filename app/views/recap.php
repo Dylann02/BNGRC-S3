@@ -1,4 +1,6 @@
 <?php
+$page = "recap";
+
 function formatMontant($montant) {
     return number_format($montant, 0, ',', ' ') . ' Ar';
 }

@@ -10,8 +10,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BNGRC - Achats via dons en argent</title>
+    <title>Achats via dons en argent</title>
     <link rel="stylesheet" href="/assets/style.css">
+    <?php $page = "achats"?>
 </head>
 <body>
 <?php include("header.php"); ?>
