@@ -17,7 +17,7 @@ class VilleModel {
 
 	 public function getVilles() {
         $stmt = $this->db->query("
-            SELECT v.id_ville, v.nom_ville, v.nb_sinistres, r.nom_region
+            SELECT v.id_ville, v.nom_ville, r.nom_region
             FROM ville v
             JOIN region r ON v.id_region = r.id_region
             ORDER BY v.id_ville DESC
@@ -28,13 +28,12 @@ class VilleModel {
     // 🔹 Ajouter ville
     public function addVille($data) {
         $stmt = $this->db->prepare("
-            INSERT INTO ville (nom_ville, id_region, nb_sinistres)
-            VALUES (?, ?, ?)
+            INSERT INTO ville (nom_ville, id_region)
+            VALUES (?, ?)
         ");
         return $stmt->execute([
             $data['nomVille'],
-            $data['region'],
-            $data['nbSinistres']
+            $data['region']
         ]);
     }
 

@@ -16,12 +16,18 @@ if(file_exists(__DIR__. $ds . 'config.php') === false) {
 // This is important as it connects any static calls to the same $app object
 $app = Flight::app();
 
+// Démarrer la session pour stocker les préférences (frais achat, etc.)
+if (session_status() === PHP_SESSION_NONE) {
+	session_start();
+}
+
 /*
  * Load the config file
  * P.S. When you require a php file and that file returns an array, the array
  * will be returned by the require statement where you can assign it to a var.
  */
 $config = require('config.php');
+$app->set('config', $config);
 
 /*
  * Load the services file.

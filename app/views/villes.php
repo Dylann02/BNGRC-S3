@@ -35,10 +35,6 @@
                             <?php endif; ?>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="nbSinistres">Nombre de sinistrés</label>
-                        <input type="number" id="nbSinistres" name="nbSinistres" placeholder="Ex: 500" min="0" required>
-                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Ajouter la ville</button>
             </form>
@@ -52,7 +48,6 @@
                         <th>ID</th>
                         <th>Ville</th>
                         <th>Région</th>
-                        <th>Nb sinistrés</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -70,12 +65,6 @@
                                     <?php echo htmlspecialchars(isset($ville['nom_region']) ? $ville['nom_region'] : 'Non définie'); ?>
                                 </td>
                                 <td>
-                                    <?php 
-                                        $nb = isset($ville['nb_sinistres']) ? $ville['nb_sinistres'] : 0;
-                                        echo htmlspecialchars((string)$nb); 
-                                    ?>
-                                </td>
-                                <td>
                                     <?php if(isset($ville['id_ville'])): ?>
                                         <a href="/delete-ville/<?php echo $ville['id_ville']; ?>" 
                                            class="btn btn-danger btn-small" 
@@ -86,7 +75,7 @@
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="5" style="text-align:center;">Aucune ville enregistrée</td>
+                            <td colspan="4" style="text-align:center;">Aucune ville enregistrée</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>

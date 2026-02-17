@@ -4,6 +4,7 @@ use app\controllers\BesoinController;
 use app\controllers\DonsController;
 use app\controllers\DispatchController;
 use app\controllers\VillesController;
+use app\controllers\AchatController;
 use flight\Engine;
 use flight\net\Router;
 
@@ -20,9 +21,11 @@ $router->group('', function (Router $router) use ($app) {
 	$router->get('/home' ,function () use ($app){
 		$donController = new DonsController($app);
 		$besoin = new BesoinController();
+		$villeController = new VillesController($app);
 		$data = $besoin->getAll();
 		$dons = $donController->index();
-		$app->render('home',['dons'=>$dons,'besoin'=>$data]);
+		$villes = $villeController->getVilles();
+		$app->render('home',['dons'=>$dons,'besoin'=>$data,'ville'=>$villes]);
 	});
 	$router->get('/dons', function () use ($app) {
 		$donController = new DonsController($app);
@@ -105,6 +108,43 @@ $router->group('', function (Router $router) use ($app) {
 		$besoin = new BesoinController();
 		$besoin->create();
 		$app->redirect('/besoins');
+	});
+
+	// --- Achats via dons en argent ---
+	$router->get('/achats', function () use ($app) {
+		$controller = new AchatController($app);
+		$data = $controller->index();
+		$config = $app->get('config');
+		$fraisPourcent = $_SESSION['frais_achat_pourcent'] ?? ($config['frais_achat_pourcent'] ?? 0);
+		$app->render('achats', [
+			'argent' => $data['argent'],
+			'besoins' => $data['besoins'],
+			'historique' => $data['historique'],
+			'frais_pourcent' => $fraisPourcent,
+			'error' => $_GET['error'] ?? null,
+			'success' => $_GET['success'] ?? null
+		]);
+	});
+	$router->post('/achats/frais', function () use ($app) {
+		$frais = max(0, (float) ($_POST['frais_pourcent'] ?? 0));
+		$_SESSION['frais_achat_pourcent'] = $frais;
+		$app->redirect('/achats?success=' . urlencode('Majoration mise à jour : ' . $frais . '%'));
+	});
+	$router->post('/achats/acheter', function () use ($app) {
+		$controller = new AchatController($app);
+		$idVilleBesoin = (int) ($_POST['id_ville_besoin'] ?? 0);
+		$quantite = (int) ($_POST['quantite'] ?? 0);
+		$result = $controller->acheter($idVilleBesoin, $quantite);
+		if (isset($result['error'])) {
+			$app->redirect('/achats?error=' . urlencode($result['error']));
+		} else {
+			$app->redirect('/achats?success=' . urlencode('Achat effectué ! Montant déduit : ' . number_format($result['montant'], 0, ',', ' ') . ' Ar'));
+		}
+	});
+	$router->get('/achats/reset', function () use ($app) {
+		$controller = new AchatController($app);
+		$controller->reset();
+		$app->redirect('/achats');
 	});
 
 }, [SecurityHeadersMiddleware::class]);

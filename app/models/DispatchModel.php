@@ -46,6 +46,9 @@ class DispatchModel {
                     // 3. Insérer dans la table dispatch
                     $this->insererDispatch($don['id'], $vb['id_ville_besoin'], $attribution);
 
+                    // 4. Déduire la quantité du don (transaction)
+                    $this->deduireQuantiteDon($don['id'], $attribution);
+
                     $quantiteRestante -= $attribution;
 
                     $resultats[] = [
@@ -72,11 +75,9 @@ class DispatchModel {
     private function getDonsNonDispatches(): array {
         $sql = "SELECT 
                     d.id, d.donateur, d.id_besoin, d.quantite, d.date_don,
-                    COALESCE(SUM(dp.quantite_attribuee), 0) AS quantite_deja_dispatchee
+                    0 AS quantite_deja_dispatchee
                 FROM don d
-                LEFT JOIN dispatch dp ON dp.id_don = d.id
-                GROUP BY d.id, d.donateur, d.id_besoin, d.quantite, d.date_don
-                HAVING d.quantite > COALESCE(SUM(dp.quantite_attribuee), 0)
+                WHERE d.quantite > 0
                 ORDER BY d.date_don ASC";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
@@ -92,14 +93,15 @@ class DispatchModel {
                     vb.id_ville_besoin, vb.id_ville, vb.id_besoin, vb.quantite, vb.date_saisie,
                     v.nom_ville,
                     b.nom_besoin,
-                    COALESCE(SUM(dp.quantite_attribuee), 0) AS quantite_deja_recue
+                    COALESCE(disp.qte, 0) AS quantite_deja_recue
                 FROM ville_besoin vb
                 JOIN ville v ON vb.id_ville = v.id_ville
                 JOIN besoin b ON vb.id_besoin = b.id_besoin
-                LEFT JOIN dispatch dp ON dp.id_ville_besoin = vb.id_ville_besoin
+                LEFT JOIN (
+                    SELECT id_ville_besoin, SUM(quantite_attribuee) AS qte FROM dispatch GROUP BY id_ville_besoin
+                ) disp ON disp.id_ville_besoin = vb.id_ville_besoin
                 WHERE vb.id_besoin = :id_besoin
-                GROUP BY vb.id_ville_besoin, vb.id_ville, vb.id_besoin, vb.quantite, vb.date_saisie, v.nom_ville, b.nom_besoin
-                HAVING vb.quantite > COALESCE(SUM(dp.quantite_attribuee), 0)
+                  AND vb.quantite > COALESCE(disp.qte, 0)
                 ORDER BY vb.date_saisie ASC";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':id_besoin', $idBesoin, PDO::PARAM_INT);
@@ -120,12 +122,48 @@ class DispatchModel {
     }
 
     /**
-     * Réinitialise le dispatch (supprime toutes les attributions)
+     * Déduit la quantité d'un don après dispatch
+     */
+    private function deduireQuantiteDon(int $idDon, int $quantite): bool {
+        $sql = "UPDATE don SET quantite = quantite - :qte WHERE id = :id AND quantite >= :qte2";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':qte', $quantite, PDO::PARAM_INT);
+        $stmt->bindValue(':id', $idDon, PDO::PARAM_INT);
+        $stmt->bindValue(':qte2', $quantite, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    /**
+     * Réinitialise le dispatch : restaure les quantités des dons puis supprime les attributions
      */
     public function resetDispatch(): bool {
-        $sql = "DELETE FROM dispatch";
-        $stmt = $this->db->prepare($sql);
-        return $stmt->execute();
+        $this->db->beginTransaction();
+        try {
+            // Restaurer les quantités des dons depuis les dispatches
+            $sql = "SELECT id_don, SUM(quantite_attribuee) AS total_attribue FROM dispatch GROUP BY id_don";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            $dispatches = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($dispatches as $d) {
+                $sqlRestore = "UPDATE don SET quantite = quantite + :qte WHERE id = :id";
+                $stmtRestore = $this->db->prepare($sqlRestore);
+                $stmtRestore->bindValue(':qte', (int) $d['total_attribue'], PDO::PARAM_INT);
+                $stmtRestore->bindValue(':id', (int) $d['id_don'], PDO::PARAM_INT);
+                $stmtRestore->execute();
+            }
+
+            // Supprimer les dispatches
+            $sqlDelete = "DELETE FROM dispatch";
+            $stmtDelete = $this->db->prepare($sqlDelete);
+            $stmtDelete->execute();
+
+            $this->db->commit();
+            return true;
+        } catch (\Exception $e) {
+            $this->db->rollBack();
+            return false;
+        }
     }
 
     /**
