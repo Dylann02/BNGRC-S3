@@ -1,18 +1,66 @@
-projet BNGRC
+PROJET BNGRC 
 
-conception:
-    -Base :
-        region (id_region , nom_region)
-        ville (id_ville , nom_ville ,id_region)
-        type_besoin (id_type_besoin , nom_type_besoin)
-        besoin (id_besoin ,nom_besoin ,id_type_besoin ,prix_unitaire)
-        ville_besoin (id_ville_besoin ,id_ville ,id_besoin ,quantite ,date_saisie)
+    Base de données :
+        -region (id_region, nom_region)
+        - ville (id_ville, nom_ville, id_region)
+        - type_besoin (id_type_besoin, nom_type_besoin)
+        - besoin (id_besoin, nom_besoin, id_type_besoin, prix_unitaire)
+        - ville_besoin (id_ville_besoin, id_ville, id_besoin, quantite, date_saisie)
+        - don (id, donateur, id_besoin, quantite, date_don)
+        - dispatch (id_dispatch, id_don, id_ville_besoin, quantite_attribuee, date_dispatch)
 
-    -donnee dynamique 
+    Vues SQL :
+        -v_affiche_besoin
+        - v_dispatch_historique
+        - v_dispatch_resume_ville
+        - v_argent_disponible
+        - v_achat_besoin_via_argent
 
-    -CRUD : 
-        *ville et region 
-        *besoins
-        *dons
 
+*CRUD & FONCTIONNALITÉS
+    ville:
+        -Modifier une ville
+        -Supprimer une ville
+
+    Besoins :
+        -Afficher liste des besoins
+        -Ajouter un besoin
+        -Supprimer un besoin
+        -Modifier un besoin
+
+    Dons :
+        -Afficher liste des dons
+        - Ajouter un don
+        - Modifier un don
+        - Supprimer un don
+
+    Dispatch :
+        - Lancer le dispatch automatique
+        - Afficher historique des dispatches
+        - Afficher résumé par ville
+        - Reset dispatch
+
+    Achats (via argent) :
+        -Afficher besoins achetables
+        - Effectuer un achat
+        - Gérer les frais de majoration
+        - Reset achats
+
+    Récapitulation :
+        -Afficher montant total des besoins
+        - Afficher montant satisfait
+        - Afficher montant restant
+        - Bouton actualiser Ajax
+        - Barre de progression
+
+*AGES / VUES:
+
+        .home.php          - Tableau de bord
+        .villes.php        - Gestion des villes
+        . besoins.php       - Gestion des besoins
+        . dons.php          - Gestion des dons
+        . dispatch.php      - Dispatch automatique
+        . achats.php        - Achats via argent
+        . recap.php         - Récapitulation des besoins
+        . header.php        - Navigation
 
