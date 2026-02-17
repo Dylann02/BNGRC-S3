@@ -1,4 +1,5 @@
 /* ===== RESET & BASE ===== */
+
 * {
     margin: 0;
     padding: 0;
@@ -13,7 +14,9 @@ body {
     color: #333;
 }
 
+
 /* ===== SIDEBAR ===== */
+
 .sidebar {
     width: 260px;
     background: linear-gradient(180deg, #1a3a5c 0%, #0d1f33 100%);
@@ -63,12 +66,14 @@ body {
 
 .nav-links li a.active {
     background: rgba(255, 255, 255, 0.12);
-    color: #4dabf7;
+    color: #f74d4d;
     border-left-color: #4dabf7;
     font-weight: 600;
 }
 
+
 /* ===== MAIN CONTENT ===== */
+
 .content {
     margin-left: 260px;
     flex: 1;
@@ -76,7 +81,9 @@ body {
     width: calc(100% - 260px);
 }
 
+
 /* ===== TOP BAR ===== */
+
 .top-bar {
     margin-bottom: 30px;
 }
@@ -87,7 +94,9 @@ body {
     margin-bottom: 20px;
 }
 
+
 /* ===== STAT CARDS ===== */
+
 .stats-summary {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -138,7 +147,9 @@ body {
     margin-top: 5px;
 }
 
+
 /* ===== TABLES ===== */
+
 .dashboard-table,
 .table-section {
     background: #fff;
@@ -196,7 +207,9 @@ tfoot .total-row td {
     padding: 14px 15px;
 }
 
+
 /* ===== FORMS ===== */
+
 .form-section {
     background: #fff;
     border-radius: 12px;
@@ -250,7 +263,9 @@ tfoot .total-row td {
     box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.15);
 }
 
+
 /* ===== BUTTONS ===== */
+
 .btn {
     display: inline-block;
     padding: 10px 24px;
@@ -301,7 +316,9 @@ tfoot .total-row td {
     font-size: 1.1rem;
 }
 
+
 /* ===== DISPATCH ===== */
+
 .dispatch-controls {
     background: #fff;
     border-radius: 12px;
@@ -325,7 +342,9 @@ tfoot .total-row td {
     font-size: 0.95rem;
 }
 
+
 /* ===== FILTER BAR ===== */
+
 .filter-bar {
     margin-bottom: 15px;
     display: flex;
@@ -345,7 +364,9 @@ tfoot .total-row td {
     font-size: 0.9rem;
 }
 
+
 /* ===== BADGES ===== */
+
 .badge {
     display: inline-block;
     padding: 4px 10px;
@@ -380,7 +401,9 @@ tfoot .total-row td {
     color: #e67700;
 }
 
+
 /* ===== PROGRESS BAR ===== */
+
 .progress-bar {
     width: 100%;
     background: #e9ecef;
@@ -405,36 +428,32 @@ tfoot .total-row td {
     min-width: 30px;
 }
 
+
 /* ===== RESPONSIVE ===== */
+
 @media (max-width: 768px) {
     .sidebar {
         width: 100%;
         height: auto;
         position: relative;
     }
-
     body {
         flex-direction: column;
     }
-
     .content {
         margin-left: 0;
         width: 100%;
         padding: 15px;
     }
-
     .stats-summary {
         grid-template-columns: repeat(2, 1fr);
     }
-
     .form-row {
         flex-direction: column;
     }
-
     table {
         font-size: 0.8rem;
     }
-
     thead th,
     tbody td {
         padding: 8px 10px;

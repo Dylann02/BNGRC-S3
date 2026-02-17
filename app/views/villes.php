@@ -1,3 +1,4 @@
+<?php $page = "villes"?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>

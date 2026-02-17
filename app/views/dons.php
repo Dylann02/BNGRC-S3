@@ -1,3 +1,4 @@
+<?php $page = "dons"?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>

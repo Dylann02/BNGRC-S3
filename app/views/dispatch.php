@@ -2,6 +2,7 @@
 /** @var array $historique */
 /** @var array $resume */
 /** @var array $total */
+$page = "dispatch";
 ?><!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -15,7 +16,7 @@
 
     <main class="content">
         <header class="top-bar">
-            <h1>Dispatch des Dons</h1>
+            <h1>dispatch</h1>
         </header>
 
         <!-- CONTROLES -->
