@@ -141,6 +141,7 @@ $labels = [
                 </tbody>
             </table>
         </section>
+        <?php include("footer.php"); ?>
     </main>
 </body>
 </html>

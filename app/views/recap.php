@@ -163,6 +163,7 @@ function formatMontant($montant) {
             Dernière mise à jour : <?= date('d/m/Y H:i:s') ?>
         </div>
     </div>
+    <?php include("footer.php"); ?>
 </main>
 
 <script src="/assets/boutton-ajax.js"></script>
