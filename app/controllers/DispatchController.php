@@ -12,9 +12,6 @@ class DispatchController {
         $this->model = new DispatchModel($app);
     }
 
-    /**
-     * Affiche la page dispatch avec l'historique et le résumé
-     */
     public function index(): array {
         return [
             'historique' => $this->model->getHistorique(),
@@ -23,16 +20,11 @@ class DispatchController {
         ];
     }
 
-    /**
-     * Lance le dispatch automatique
-     */
     public function lancer(): array {
         return $this->model->lancerDispatch();
     }
 
-    /**
-     * Réinitialise toutes les attributions
-     */
+
     public function reset(): bool {
         return $this->model->resetDispatch();
     }

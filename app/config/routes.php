@@ -19,14 +19,14 @@ $router->group('', function (Router $router) use ($app) {
 	$router->get('/', function () use ($app) {
 		$app->redirect('/home');
 	});
-	$router->get('/home' ,function () use ($app){
+	$router->get('/home', function () use ($app) {
 		$donController = new DonsController($app);
 		$besoin = new BesoinController();
 		$villeController = new VillesController($app);
 		$data = $besoin->getAll();
 		$dons = $donController->index();
 		$villes = $villeController->getVilles();
-		$app->render('home',['dons'=>$dons,'besoin'=>$data,'ville'=>$villes]);
+		$app->render('home', ['dons' => $dons, 'besoin' => $data, 'ville' => $villes]);
 	});
 	$router->get('/dons', function () use ($app) {
 		$donController = new DonsController($app);
@@ -48,8 +48,8 @@ $router->group('', function (Router $router) use ($app) {
 		$donController->create($id_besoin, $quantite, $donateur);
 		$app->redirect('/dons');
 	});
-	
-	$router->get('/dispatch' ,function () use ($app){
+
+	$router->get('/dispatch', function () use ($app) {
 		$dispatchController = new DispatchController($app);
 		$data = $dispatchController->index();
 		$app->render('dispatch', [
@@ -58,12 +58,12 @@ $router->group('', function (Router $router) use ($app) {
 			'total' => $data['total']
 		]);
 	});
-	$router->get('/dispatch/lancer' ,function () use ($app){
+	$router->get('/dispatch/lancer', function () use ($app) {
 		$dispatchController = new DispatchController($app);
 		$dispatchController->lancer();
 		$app->redirect('/dispatch');
 	});
-	$router->get('/dispatch/reset' ,function () use ($app){
+	$router->get('/dispatch/reset', function () use ($app) {
 		$dispatchController = new DispatchController($app);
 		$dispatchController->reset();
 		$app->redirect('/dispatch');
@@ -78,8 +78,6 @@ $router->group('', function (Router $router) use ($app) {
 			'villes' => $villes,
 			'regions' => $regions
 		]);
-
-
 	});
 
 	$router->post('/villes', function () use ($app) {
@@ -87,7 +85,6 @@ $router->group('', function (Router $router) use ($app) {
 		$controller->addVille();
 		$app->redirect('/villes');
 	});
-
 
 	$router->get('/besoins', function () use ($app) {
 		$besoin = new BesoinController();
@@ -149,13 +146,13 @@ $router->group('', function (Router $router) use ($app) {
 	});
 
 	$router->get('/recap', function () use ($app) {
-    $controller = new RecapController($app);
-    $controller->index();
-});
+		$controller = new RecapController($app);
+		$controller->index();
+	});
 
-$router->get('/api/recap', function () use ($app) {
-    $controller = new RecapController($app);
-    $controller->getRecapJson();
-});
+	$router->get('/api/recap', function () use ($app) {
+		$controller = new RecapController($app);
+		$controller->getRecapJson();
+	});
 
 }, [SecurityHeadersMiddleware::class]);
