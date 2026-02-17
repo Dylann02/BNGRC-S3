@@ -100,6 +100,7 @@
                 <!-- Optionnel : total général ici si besoin -->
             </table>
         </section>
+        <?php include("footer.php"); ?>
     </main>
 </body>
 </html>

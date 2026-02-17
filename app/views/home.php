@@ -42,6 +42,7 @@ foreach($dons as $don){
                 </div>
             </div>
         </header>
+        <?php include("footer.php"); ?>
     </main>
 </body>
 </html>

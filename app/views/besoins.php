@@ -59,16 +59,6 @@
         <!-- LISTE DES BESOINS -->
         <section class="table-section">
             <h2>Liste des besoins</h2>
-            <div class="filter-bar">
-                <label for="filterVille">Filtrer par ville :</label>
-                <select id="filterVille" name="filterVille">
-                    <option value="">Toutes les villes</option>
-                    <?php foreach ($ville as $v) {?>
-                        <option value="<?= $v['id_ville'];?>"><?= $v['nom_ville'];?></option>
-                    <?php }?>
-                    
-                </select>
-            </div>
             <table>
                 <thead>
                     <tr>
@@ -107,6 +97,7 @@
                 </tfoot>
             </table>
         </section>
+        <?php include("footer.php"); ?>
     </main>
 </body>
 </html>

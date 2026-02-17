@@ -168,6 +168,7 @@
                 <?php endif; ?>
             </table>
         </section>
+        <?php include("footer.php"); ?>
     </main>
 </body>
 </html>
