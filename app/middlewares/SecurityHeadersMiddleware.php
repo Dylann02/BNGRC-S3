@@ -25,12 +25,12 @@ class SecurityHeadersMiddleware
 			$tracyCssBypass = ' \'unsafe-inline\'';
 		}
 
-		$csp = "default-src 'self'; script-src 'self' 'nonce-{$nonce}' 'strict-dynamic'; style-src 'self' {$tracyCssBypass}; img-src 'self' data:;";
+		// $csp = "default-src 'self'; script-src 'self' 'nonce-{$nonce}' 'strict-dynamic'; style-src 'self' {$tracyCssBypass}; img-src 'self' data:;";
 		$this->app->response()->header('X-Frame-Options', 'SAMEORIGIN');
-		$this->app->response()->header("Content-Security-Policy", $csp);
+		// $this->app->response()->header("Content-Security-Policy", $csp);
 		$this->app->response()->header('X-XSS-Protection', '1; mode=block');
 		$this->app->response()->header('X-Content-Type-Options', 'nosniff');
-		$this->app->response()->header('Referrer-Policy', 'no-referrer-when-downgrade');
+		// $this->app->response()->header('Referrer-Policy', 'no-referrer-when-downgrade');
 		$this->app->response()->header('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
 		$this->app->response()->header('Permissions-Policy', 'geolocation=()');
 	}
